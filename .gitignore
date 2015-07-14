@@ -5,3 +5,5 @@ build/
 **/*.iml
 local.properties
 target/
+*.ipr
+*.iws

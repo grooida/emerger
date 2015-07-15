@@ -33,9 +33,9 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.6'
-        classpath 'net.kaleidos.gradle.plugins:emerger:0.0.1-SNAPSHOT'
+        classpath 'com.android.tools.build:gradle:1.2.3' // Android tools
+        classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.6' // Android/Groovy
+        classpath 'net.kaleidos.gradle.plugins:emerger:0.0.1-SNAPSHOT' // Emerger
     }
 }
 
@@ -44,17 +44,4 @@ apply plugin: 'groovyx.grooid.groovy-android'
 apply plugin: 'net.kaleidos.gradle.plugins.emerger'
 </code>
 </pre>
-
-Then in the *packaging* options you should declare the following lines:
-
-<pre>
-<code>
-packagingOptions {
-    pickFirst 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
-}
-</code>
-</pre>
-
-The first line takes the first *org.codehaus.groovy.runtime.ExtensionModule* which is the file produced by the plugin
-and the one containing all extension modules found in the project dependencies.
 

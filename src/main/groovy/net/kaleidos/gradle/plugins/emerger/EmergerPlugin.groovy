@@ -38,10 +38,29 @@ class EmergerPlugin implements Plugin<Project> {
             variant.registerJavaGeneratingTask(generationTask, generationTask.outputResult)
         }
 
+        // No need to exclude extension files or global transformation files in your project
+        addExclusionsFrom(project)
     }
 
-    // TODO: this should return List<VariantConfiguration>
-    def getProjectVariantsFrom(Project project) {
+    /**
+     * Excludes extension module, and global transformation files from the Android project
+     *
+     * @param project the project we are working on
+     **/
+    void addExclusionsFrom(final Project project) {
+        project.android.packagingOptions {
+            exclude 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
+            exclude 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
+        }
+    }
+
+    /**
+     * Returns a list of project variants
+     *
+     * @param project The project we are working on. It could be library or app
+     * @return a list of variants
+     **/
+    def getProjectVariantsFrom(final Project project) {
 
         def variants = null
 
@@ -56,21 +75,3 @@ class EmergerPlugin implements Plugin<Project> {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

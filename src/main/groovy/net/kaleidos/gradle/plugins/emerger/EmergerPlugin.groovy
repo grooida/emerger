@@ -5,6 +5,11 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 
+/**
+ * This plugins merges extension module descriptors in order to add only one descriptor to the produced apk.
+ * It also adds some exclusions to the applied Android project.
+ *
+ **/
 class EmergerPlugin implements Plugin<Project> {
 
     static final String EXTENSION_MODULE_PATH = "META-INF/services/org.codehaus.groovy.runtime.ExtensionModule"
@@ -14,6 +19,7 @@ class EmergerPlugin implements Plugin<Project> {
     void apply(final Project project) {
         Plugin<Project> groovyAndroidPlugin = project.plugins.findPlugin('groovyx.grooid.groovy-android')
 
+        /* It only makes sense along with the Groovy/Android plugin */
         if (!groovyAndroidPlugin) {
             throw new GradleException(MESSAGE_REQUIRED_PLUGIN)
         }
@@ -22,14 +28,14 @@ class EmergerPlugin implements Plugin<Project> {
 
         variants.all { variant ->
             String taskName      = "mergeExtensionModules${variant.name.capitalize()}"
-            String generated = "$project.buildDir/generated/res/$flavorName/$buildType.name/$EXTENSION_MODULE_PATH"
+            String generated = "$project.buildDir/intermediates/javaResources/$flavorName/$buildType.name/$EXTENSION_MODULE_PATH"
             Task generationTask  = project.task(taskName, type: EmergerTask) {
                 outputResult   = project.file(generated)
                 dependencies  = Dependencies.getDependencyFilesFrom(project)
             }
 
             // Makes the magic happen (inserts resources so devs can use it)
-            variant.registerResGeneratingTask(generationTask, generationTask.outputResult)
+            variant.registerJavaGeneratingTask(generationTask, generationTask.outputResult)
         }
 
     }

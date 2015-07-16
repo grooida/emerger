@@ -47,7 +47,7 @@ class Files {
     static Properties extractExtensionModulePropertiesFromJar(final File file) {
         Properties properties = new Properties()
 
-        if(!file?.exists()) {
+        if (!file?.exists()) {
             log.debug "file $file doesnt exist: skip"
 
             return properties
@@ -72,10 +72,11 @@ class Files {
      * @return an instance of {@link Properties} with all module properties in case the extension module was found
      * otherwise it will return an empty {@link Properties} instance
      **/
+    @SuppressWarnings('AssignmentInConditional')
     static Properties extractExtensionModulePropertiesFromAar(final File file) {
         Properties properties = new Properties()
 
-        if(!file?.exists()) {
+        if (!file?.exists()) {
             log.debug "file $file doesnt exist: skip"
 
             return properties
@@ -90,8 +91,8 @@ class Files {
             ZipInputStream jarInputStream = new ZipInputStream(aarFile.getInputStream(aarEntry))
             ZipEntry nextEntry = null
 
-            while(nextEntry = jarInputStream.nextEntry) {
-                if (nextEntry.name == ENTRY_EXTENSION_MODULE)  {
+            while ((nextEntry = jarInputStream.nextEntry)) {
+                if (nextEntry.name == ENTRY_EXTENSION_MODULE) {
                     properties.load(new NoCloseInputStream(jarInputStream))
                     break
                 }
@@ -106,6 +107,7 @@ class Files {
      **/
     @InheritConstructors
     static class NoCloseInputStream extends FilterInputStream {
+        @Override
         void close() throws IOException { }
     }
 

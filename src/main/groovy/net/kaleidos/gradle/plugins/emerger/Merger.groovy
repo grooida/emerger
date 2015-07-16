@@ -24,6 +24,7 @@ class Merger {
      * @param name the name of the module
      * @return a new {@link Properties} instance
      **/
+    @SuppressWarnings('FactoryMethodName')
     static Properties createExtensionModule(final String name) {
         Properties properties = new Properties()
         properties.setProperty(KEY_MODULE_NAME, name)
@@ -60,7 +61,7 @@ class Merger {
 
         if (newValue) {
             String previousValue = previous.getProperty(key)
-            String valueToSet = [previousValue,newValue].findAll().join(',')
+            String valueToSet = [previousValue, newValue].findAll().join(',')
 
             properties.setProperty(key, valueToSet)
         }

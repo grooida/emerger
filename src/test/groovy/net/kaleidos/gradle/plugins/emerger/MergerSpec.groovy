@@ -28,9 +28,10 @@ class MergerSpec extends Specification {
         }
     }
 
+    @SuppressWarnings('NoDef')
     void 'merging a given value with an existing properties file'() {
         given: 'some previous entries'
-        def map = [(KEY_EXTENSION_CLASSES): 'com.company.Class1']
+        def map = [(KEY_EXTENSION_CLASSES):'com.company.Class1']
         def properties = BASE_EXTENSION_MODULE
 
         and: 'initializing properties file'
@@ -47,17 +48,19 @@ class MergerSpec extends Specification {
         }
     }
 
+    @SuppressWarnings('NoDef')
     void 'merging to property files'() {
         given: 'a basic property file'
         def basic = BASE_EXTENSION_MODULE
-        basic.putAll((KEY_EXTENSION_CLASSES): 'net.Class1')
+        basic.putAll((KEY_EXTENSION_CLASSES):'net.Class1')
 
         and: 'another with different values'
         def other = new Properties()
-        other.putAll((KEY_EXTENSION_CLASSES): 'com.Class1', (KEY_STATIC_EXTENSION_CLASSES): 'com.static.Class1')
+        other.putAll((KEY_EXTENSION_CLASSES):'com.Class1', (KEY_STATIC_EXTENSION_CLASSES):'com.static.Class1')
 
         when: 'merging both'
-        Properties merged = Merger.mergeByKeys(basic, other, [KEY_EXTENSION_CLASSES, KEY_STATIC_EXTENSION_CLASSES] as String[])
+        String[] keys = [KEY_EXTENSION_CLASSES, KEY_STATIC_EXTENSION_CLASSES] as String[]
+        Properties merged = Merger.mergeByKeys(basic, other, keys)
 
         then: 'checking values'
         with(merged) {
@@ -77,7 +80,8 @@ class MergerSpec extends Specification {
         File destination = new File(FILE_EXTENSION_MODULE_TWO.toURI())
 
         when:
-        Properties merged = Merger.mergeByKeys(source, destination, [KEY_EXTENSION_CLASSES, KEY_STATIC_EXTENSION_CLASSES] as String[])
+        String[] keys = [KEY_EXTENSION_CLASSES, KEY_STATIC_EXTENSION_CLASSES] as String[]
+        Properties merged = Merger.mergeByKeys(source, destination, keys)
 
         then:
         with(merged) {

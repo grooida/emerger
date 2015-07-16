@@ -29,7 +29,9 @@ class Dependencies {
      * @return a set of files of the available artifacts from the current project's configuration
      **/
     static List<File> getResolvedArtifactFilesFrom(final Configuration configuration) {
-        return configuration.resolvedConfiguration.resolvedArtifacts.collect { ResolvedArtifact artifact -> artifact.file }
+        return configuration.resolvedConfiguration
+                .resolvedArtifacts
+                .collect { ResolvedArtifact artifact -> artifact.file }
     }
 
 }

@@ -1,9 +1,9 @@
 package net.kaleidos.gradle.plugins.emerger
 
-import static net.kaleidos.gradle.plugins.emerger.Merger.getKEY_EXTENSION_CLASSES
-import static net.kaleidos.gradle.plugins.emerger.Merger.getKEY_MODULE_NAME
-import static net.kaleidos.gradle.plugins.emerger.Merger.getKEY_STATIC_EXTENSION_CLASSES
-import static net.kaleidos.gradle.plugins.emerger.Merger.getKEY_VERSION_NAME
+import static net.kaleidos.gradle.plugins.emerger.Merger.KEY_EXTENSION_CLASSES
+import static net.kaleidos.gradle.plugins.emerger.Merger.KEY_MODULE_NAME
+import static net.kaleidos.gradle.plugins.emerger.Merger.KEY_STATIC_EXTENSION_CLASSES
+import static net.kaleidos.gradle.plugins.emerger.Merger.KEY_VERSION_NAME
 
 import spock.lang.Specification
 

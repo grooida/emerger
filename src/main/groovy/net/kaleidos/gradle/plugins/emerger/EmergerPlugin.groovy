@@ -12,10 +12,13 @@ import org.gradle.api.Task
  **/
 class EmergerPlugin implements Plugin<Project> {
 
+    static final String GENERATION_DIR = "intermediates/javaResources"
     static final String EXTENSION_MODULE_PATH = "META-INF/services/org.codehaus.groovy.runtime.ExtensionModule"
+    static final String GLOBAL_TRANSFORMATION_PATH = 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
     static final String MESSAGE_REQUIRED_PLUGIN = 'You must apply the Groovy/Android plugin before using emerger plugin'
 
     @Override
+    @SuppressWarnings('NoDef')
     void apply(final Project project) {
         Plugin<Project> groovyAndroidPlugin = project.plugins.findPlugin('groovyx.grooid.groovy-android')
 
@@ -28,8 +31,8 @@ class EmergerPlugin implements Plugin<Project> {
 
         variants.all { variant ->
             String taskName      = "mergeExtensionModules${variant.name.capitalize()}"
-            String generated = "$project.buildDir/intermediates/javaResources/$flavorName/$buildType.name/$EXTENSION_MODULE_PATH"
-            Task generationTask  = project.task(taskName, type: EmergerTask) {
+            String generated = "$project.buildDir/$GENERATION_DIR/$flavorName/$buildType.name/$EXTENSION_MODULE_PATH"
+            Task generationTask  = project.task(taskName, type:EmergerTask) {
                 outputResult   = project.file(generated)
                 dependencies  = Dependencies.getDependencyFilesFrom(project)
             }
@@ -49,8 +52,8 @@ class EmergerPlugin implements Plugin<Project> {
      **/
     void addExclusionsFrom(final Project project) {
         project.android.packagingOptions {
-            exclude 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
-            exclude 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
+            exclude EXTENSION_MODULE_PATH
+            exclude GLOBAL_TRANSFORMATION_PATH
         }
     }
 
@@ -60,6 +63,7 @@ class EmergerPlugin implements Plugin<Project> {
      * @param project The project we are working on. It could be library or app
      * @return a list of variants
      **/
+    @SuppressWarnings('NoDef')
     def getProjectVariantsFrom(final Project project) {
 
         def variants = null

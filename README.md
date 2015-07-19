@@ -35,7 +35,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3' // Android tools
         classpath 'org.codehaus.groovy:gradle-groovy-android-plugin:0.3.6' // Android/Groovy
-        classpath 'net.kaleidos.gradle.plugins:emerger:0.0.1' // Emerger
+        classpath 'net.kaleidos.gradle.plugins:emerger:0.0.2' // Emerger
     }
 }
 
@@ -47,4 +47,3 @@ apply plugin: 'net.kaleidos.gradle.plugins.emerger'
 
 Now you can use any Groovy library dependency in your Android app without worrying about extension module
 or global transformation collisions.
-

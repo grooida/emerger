@@ -21,6 +21,8 @@ class EmergerPlugin implements Plugin<Project> {
     @SuppressWarnings('NoDef')
     void apply(final Project project) {
         Plugin<Project> groovyAndroidPlugin = project.plugins.findPlugin('groovyx.grooid.groovy-android')
+        if (!groovyAndroidPlugin)
+            groovyAndroidPlugin = project.plugins.findPlugin('groovyx.android')
 
         /* It only makes sense along with the Groovy/Android plugin */
         if (!groovyAndroidPlugin) {
